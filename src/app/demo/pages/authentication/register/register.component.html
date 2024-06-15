@@ -1,0 +1,108 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="card mt-5">
+        <div class="card-body">
+          <a href="javascript:" class="d-flex justify-content-center mt-3">
+            <img src="assets/images/logo-dark.svg" />
+          </a>
+          <div class="row">
+            <div class="d-flex justify-content-center">
+              <div class="auth-header">
+                <h2 class="text-secondary mt-5"><b>Sign up</b></h2>
+                <p class="fs-4 mt-2">Enter your credentials to continue</p>
+              </div>
+            </div>
+          </div>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <!-- Step 1 content -->
+            <div *ngIf="step === 1">
+              <!-- Business Details -->
+              <h5 class="my-4 d-flex justify-content-center"> Step 1: Business Details </h5>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="businessName" formControlName="businessName" placeholder=" " />
+                <label for="businessName">Business Name</label>
+                <!-- Error message -->
+                <div *ngIf="registerForm.get('businessName').invalid && registerForm.get('businessName').touched" class="text-danger">Business Name is required.</div>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="businessEmail" formControlName="businessEmail" placeholder=" " (blur)="submitEmail()" />
+                <label for="businessEmail">Business Email</label>
+                <!-- Error message -->
+                <div *ngIf="registerForm.get('businessEmail').invalid && registerForm.get('businessEmail').touched" class="text-danger">
+                  <div *ngIf="registerForm.get('businessEmail').errors?.['required']">Email is required.</div>
+                  <div *ngIf="registerForm.get('businessEmail').errors?.['email']">Invalid email format.</div>
+                </div>
+              </div>
+              <!-- Other fields... -->
+            </div>
+
+            <!-- Step 2 content -->
+            <div *ngIf="step === 2">
+              <h5 class="my-4 d-flex justify-content-center"> Step 2: Tax Information </h5>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="businessPAN" formControlName="businessPAN" placeholder=" " />
+                <label for="businessPAN">Business PAN</label>
+                <!-- Error message -->
+                <div *ngIf="registerForm.get('businessPAN').invalid && registerForm.get('businessPAN').touched" class="text-danger">Business PAN is required and must be 10 characters.</div>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="businessGST" formControlName="businessGST" placeholder=" " />
+                <label for="businessGST">Business GST</label>
+                <!-- Error message -->
+                <div *ngIf="registerForm.get('businessGST').invalid && registerForm.get('businessGST').touched" class="text-danger">Business GST is required and must be 15 characters.</div>
+              </div>
+            </div>
+
+            <!-- Step 3 content -->
+            <div *ngIf="step === 3">
+              <h5 class="my-4 d-flex justify-content-center"> Step 3: Upload Logo </h5>
+              <div class="form-floating mb-3">
+                <input type="file" class="form-control" id="businessLogo" (change)="onFileChange($event)" />
+                <label for="businessLogo">Business Logo</label>
+                <!-- Error message -->
+                <div *ngIf="registerForm.get('businessLogo').invalid && registerForm.get('businessLogo').touched" class="text-danger">Business Logo is required.</div>
+              </div>
+            </div>
+
+            <!-- Step 4 content -->
+            <div *ngIf="step === 4">
+              <h5 class="my-4 d-flex justify-content-center"> Step 4: Verify Mobile Number </h5>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="mobileNumber" formControlName="mobileNumber" placeholder=" " />
+                <label for="mobileNumber">Mobile Number</label>
+                <!-- Error message -->
+                <div *ngIf="registerForm.get('mobileNumber').invalid && registerForm.get('mobileNumber').touched" class="text-danger">
+                  <div *ngIf="registerForm.get('mobileNumber').errors?.['required']">Mobile Number is required.</div>
+                  <div *ngIf="registerForm.get('mobileNumber').errors?.['pattern']">Please enter a valid 10-digit mobile number.</div>
+                </div>
+              </div>
+              <div *ngIf="otpSent" class="form-floating mb-3 mt">
+                <input type="text" class="form-control" id="otp" formControlName="otp" placeholder=" " />
+                <label for="otp">Enter OTP</label>
+                <!-- Error message -->
+                <div *ngIf="registerForm.get('otp').invalid && registerForm.get('otp').touched" class="text-danger">
+                  <div *ngIf="registerForm.get('otp').errors?.['required']">OTP is required.</div>
+                  <div *ngIf="registerForm.get('otp').errors?.['pattern']">OTP must be a 6-digit number.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Navigation buttons -->
+            <div class="d-grid mt-4">
+              <button type="button" class="btn btn-secondary mb-3" (click)="prevStep()" *ngIf="step > 1">Previous</button>
+              <button type="button" class="btn btn-secondary" (click)="nextStep()" *ngIf="step < 4" [disabled]="stepError">Next</button>
+              <button type="button" class="btn btn-secondary mb-3" (click)="sendOTP()" *ngIf="step === 4 && !otpSent" [disabled]="registerForm.get('mobileNumber').invalid">Send OTP</button>
+              <button type="submit" class="btn btn-secondary" *ngIf="step === 4 && otpSent" [disabled]="stepError || !otpSent || registerForm.invalid">Sign Up</button>
+            </div>
+          </form>
+
+          <hr />
+          <h5 class="d-flex justify-content-center">
+            <a [routerLink]="['/guest/login']"> Already have an account? </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

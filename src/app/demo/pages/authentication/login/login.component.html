@@ -1,0 +1,78 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="card my-5">
+        <div class="card-body">
+          <a href="#" class="d-flex justify-content-center">
+            <img src="assets/images/logo-dark.svg" />
+          </a>
+          <div class="row">
+            <div class="d-flex justify-content-center">
+              <div class="auth-header">
+                <h2 class="text-secondary mt-5"><b>Hi, Welcome Back</b></h2>
+                <p class="fs-4 mt-2">Enter your credentials to continue</p>
+              </div>
+            </div>
+          </div>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="d-grid">
+              <button type="button" class="btn mt-2 btn-light-primary bg-light text-muted">
+                <img src="assets/images/authentication/google-icon.svg" />Sign In With Google
+              </button>
+            </div>
+            <div class="saprator mt-3">
+              <span>or</span>
+            </div>
+            <h5 class="my-4 d-flex justify-content-center"> Sign in with Email address </h5>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="floatingInput" formControlName="email" />
+              <label for="floatingInput">Email address / Username</label>
+            </div>
+            <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)" class="text-danger">
+              <div *ngIf="loginForm.get('email')?.errors?.['required']">
+                Email is required.
+              </div>
+              <div *ngIf="loginForm.get('email')?.errors?.['email']">
+                Invalid email format.
+              </div>
+              <div *ngIf="loginForm.get('email')?.errors?.['pattern']">
+                Email must be in a valid format.
+              </div>
+            </div>
+            <div class="form-floating mb-3 position-relative">
+              <input [type]="passwordVisible ? 'text' : 'password'" class="form-control" id="password" formControlName="password" />
+              <label for="password">Password</label>
+              <i class="toggle-password" (click)="togglePasswordVisibility()">
+                {{ passwordVisible ? '🙈' : '👁️' }}
+              </i>
+            </div>
+            <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="text-danger">
+              <div *ngIf="loginForm.get('password')?.errors?.['required']">
+                Password is required.
+              </div>
+              <div *ngIf="loginForm.get('password')?.errors?.['pattern']">
+                Password must be at least 8 characters long, contain at least one letter, one number, and one special character.
+              </div>
+            </div>
+            <div class="d-flex mt-1 justify-content-between">
+              <div class="form-check">
+                <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" formControlName="rememberMe" />
+                <label class="form-check-label text-muted" for="customCheckc1">Remember me</label>
+              </div>
+              <h5 class="text-secondary">
+                <a href="javascript:">Forgot Password?</a>
+              </h5>
+            </div>
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-secondary" [disabled]="loginForm.invalid" [ngClass]="{'disabled-btn': loginForm.invalid}">Sign In</button>
+            </div>
+          </form>
+          <hr />
+          <h5 class="d-flex justify-content-center">
+            <a [routerLink]="['/guest/register']">Don't have an account?</a>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
