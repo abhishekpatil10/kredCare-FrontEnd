@@ -28,6 +28,10 @@ const routes: Routes = [
       {
         path: 'sample-page',
         loadComponent: () => import('./demo/sample-page/sample-page.component')
+      },
+      {
+        path: 'account-profile',
+        loadComponent: () => import('./demo/pages/profile/profile.component')
       }
     ]
   },

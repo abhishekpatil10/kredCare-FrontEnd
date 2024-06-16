@@ -115,12 +115,20 @@ const NavigationItems = [
         icon: 'ti ti-brand-chrome'
       },
       {
-        id: 'document',
-        title: 'Document',
+        id: 'account-profile',
+        title: 'Account Profile',
+        type: 'item',
+        url: '/account-profile',
+        classes: 'nav-item',
+        icon: 'ti ti-settings'
+      },
+      {
+        id: 'logout',
+        title: 'Logout',
         type: 'item',
         classes: 'nav-item',
         url: 'https://codedthemes.gitbook.io/berry-angular/',
-        icon: 'ti ti-vocabulary',
+        icon: 'ti ti-logout',
         target: true,
         external: true
       }
